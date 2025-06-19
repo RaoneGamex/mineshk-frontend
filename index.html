@@ -1,204 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAONE - SIGNALS</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            background-color: #0f0f0f;
-            color: #fff;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
-            margin: 0;
-            padding-bottom: 80px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAONE - SIGNALS</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding-bottom: 80px;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
-        }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
 
-        h1 {
-            color: #00ffcc;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
+    h1 {
+      color: #00ffcc;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
 
-        .clock {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #ccc;
-        }
+    .clock {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(5, 60px);
-            grid-gap: 10px;
-            justify-content: center;
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 60px);
+      grid-gap: 10px;
+      justify-content: center;
+    }
 
-        .cell {
-            width: 60px;
-            height: 60px;
-            background-color: #1f1f1f;
-            border: 2px solid #444;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-        }
+    .cell {
+      width: 60px;
+      height: 60px;
+      background-color: #1f1f1f;
+      border: 2px solid #444;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      transition: all 0.3s ease;
+    }
 
-        .diamond {
-            background-color: #0e0;
-            color: #000;
-            font-weight: bold;
-        }
+    .diamond {
+      background-color: #0e0;
+      color: #000;
+      font-weight: bold;
+    }
 
-        .controls {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #1a1a1a;
-            padding: 15px 10px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
-            z-index: 100;
-        }
+    .controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #1a1a1a;
+      padding: 15px 10px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
 
-        select, button {
-            padding: 10px;
-            margin: 5px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-        }
+    select,
+    button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
 
-        button {
-            background-color: #00ffcc;
-            color: #000;
-            cursor: pointer;
-        }
+    button {
+      background-color: #00ffcc;
+      color: #000;
+      cursor: pointer;
+    }
 
-        .social-icons {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 101;
-        }
+    .social-icons {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 101;
+    }
 
-        .social {
-            width: 40px;
-            height: 40px;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
+    .social {
+      width: 40px;
+      height: 40px;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
 
-        .telegram {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg');
-        }
+    .telegram {
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg');
+    }
 
-        .instagram {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png');
-        }
+    .instagram {
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png');
+    }
 
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: repeat(5, 50px);
-                grid-gap: 8px;
-            }
-            .cell {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-        }
-    </style>
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-size: 20px;
+      font-weight: bold;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(5, 50px);
+        grid-gap: 8px;
+      }
+      .cell {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>RAONE - SIGNALS</h1>
-        <div id="clock" class="clock"></div>
-        <div class="grid" id="grid"></div>
-    </div>
+  <div class="container">
+    <h1>RAONE - SIGNALS</h1>
+    <div id="clock" class="clock"></div>
+    <p style="color: #aaa; font-size: 14px; margin-bottom: 15px;">
+      Set number of mines below and click “Get Signal” to reveal diamonds 💎<br />
+      ⚠️ Use a new account only for better results.
+    </p>
+    <div class="grid" id="grid"></div>
+  </div>
 
-    <div class="controls">
-        <label for="mines">Select Number of Mines:</label>
-        <select id="mines">
-            <option value="1">1 Mine</option>
-            <option value="3" selected>3 Mines</option>
-            <option value="5">5 Mines</option>
-            <option value="7">7 Mines</option>
-            <option value="10">10 Mines</option>
-        </select>
-        <button onclick="generateGrid()">🔁 Get Signal</button>
-    </div>
+  <div class="controls">
+    <label for="mines">Select Number of Mines:</label>
+    <select id="mines">
+      <option value="1">1 Mine</option>
+      <option value="3" selected>3 Mines</option>
+      <option value="5">5 Mines</option>
+      <option value="7">7 Mines</option>
+      <option value="10">10 Mines</option>
+    </select>
+    <button onclick="generateGrid()">🔁 Get Signal</button>
+  </div>
 
-    <div class="social-icons">
-        <a href="https://t.me/RAONESIGNALS" target="_blank" class="social telegram"></a>
-        <a href="https://www.instagram.com/tradeinsighthq?igsh=OGhkOTVsdjhuYjh2" target="_blank" class="social instagram"></a>
-        <a href="https://www.instagram.com/billionairesflow7?igsh=MWlnOXdicnhmdnk2MQ==" target="_blank" class="social instagram"></a>
-    </div>
+  <div class="social-icons">
+    <a href="https://t.me/RAONESIGNALS" target="_blank" class="social telegram"></a>
+    <a href="https://www.instagram.com/tradeinsighthq?igsh=OGhkOTVsdjhuYjh2" target="_blank" class="social instagram"></a>
+    <a href="https://www.instagram.com/billionairesflow7?igsh=MWlnOXdicnhmdnk2MQ==" target="_blank" class="social instagram"></a>
+  </div>
 
-    <script>
-        // Create default grid
-        document.addEventListener("DOMContentLoaded", () => {
-            const grid = document.getElementById("grid");
-            for (let i = 0; i < 25; i++) {
-                const cell = document.createElement("div");
-                cell.classList.add("cell");
-                grid.appendChild(cell);
-            }
+  <div id="overlay"></div>
+
+  <footer style="margin-top: 40px; text-align: center; color: #444; font-size: 12px">
+    🔐 Made with ❤️ by RAONE | © 2025
+  </footer>
+
+  <script>
+    let isCooldown = false;
+
+    function generateGrid() {
+      if (isCooldown) {
+        showOverlay("⏳ Please wait 5 seconds...");
+        return;
+      }
+
+      isCooldown = true;
+      const mineCount = parseInt(document.getElementById("mines").value);
+      const diamondCounts = { 1: 10, 3: 7, 5: 6, 7: 3, 10: 2 };
+      const diamondCount = diamondCounts[mineCount];
+      const grid = document.getElementById("grid");
+      const getSignalBtn = document.querySelector("button");
+      grid.innerHTML = "";
+      getSignalBtn.disabled = true;
+
+      for (let i = 0; i < 25; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        grid.appendChild(cell);
+      }
+
+      showOverlay("⏳ Please wait 5 seconds...");
+
+      setTimeout(() => {
+        const diamondPositions = [];
+        const totalCells = 25;
+        const available = Array.from({ length: totalCells }, (_, i) => i);
+
+        while (diamondPositions.length < diamondCount) {
+          const index = Math.floor(Math.random() * available.length);
+          diamondPositions.push(available.splice(index, 1)[0]);
+        }
+
+        const cells = document.querySelectorAll(".grid .cell");
+        cells.forEach((cell, i) => {
+          cell.textContent = "";
+          cell.classList.remove("diamond");
+
+          if (diamondPositions.includes(i)) {
+            cell.classList.add("diamond");
+            cell.textContent = "💎";
+          }
         });
 
-        // Get Signal button
-        function generateGrid() {
-            const mineCount = parseInt(document.getElementById("mines").value);
-            const diamondCounts = {
-                1: 10,
-                3: 7,
-                5: 6,
-                7: 3,
-                10: 2
-            };
-            const diamondCount = diamondCounts[mineCount];
-            const cells = document.querySelectorAll(".grid .cell");
+        hideOverlay();
+        isCooldown = false;
+        getSignalBtn.disabled = false;
+      }, 5000);
+    }
 
-            cells.forEach(cell => {
-                cell.textContent = "";
-                cell.classList.remove("diamond");
-            });
+    function showOverlay(msg) {
+      const overlay = document.getElementById("overlay");
+      overlay.textContent = msg;
+      overlay.style.display = "flex";
+    }
 
-            const available = Array.from(cells.keys());
-            const diamondPositions = [];
+    function hideOverlay() {
+      const overlay = document.getElementById("overlay");
+      overlay.style.display = "none";
+    }
 
-            while (diamondPositions.length < diamondCount) {
-                const randomIndex = Math.floor(Math.random() * available.length);
-                const pos = available.splice(randomIndex, 1)[0];
-                diamondPositions.push(pos);
-            }
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      document.getElementById("clock").textContent = timeString;
+    }
 
-            diamondPositions.forEach(index => {
-                cells[index].textContent = "💎";
-                cells[index].classList.add("diamond");
-            });
-        }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-        // Clock
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            document.getElementById("clock").textContent = timeString;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("grid");
+      for (let i = 0; i < 25; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        grid.appendChild(cell);
+      }
+    });
+  </script>
 </body>
 </html>
